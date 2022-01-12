@@ -27,7 +27,7 @@ function validateUser(req, res, next) {
   // DO YOUR MAGIC
   if (!req.body.name){
     next({ status: 400, message: 'missing required name field'})
-  } else{
+  } else {
     next()
   }
 }
@@ -41,6 +41,16 @@ function validatePost(req, res, next) {
   }
 }
 
+//! i added this one
+async function checkNameExists(req, res, next){
+  const existingName = await User.getName(req.body.name)
+  if (existingName) {
+    next({ status: 400, message: 'sorry that name already exists in our db. Try another' })
+  } else{
+    next()
+  }
+}
+
 // do not forget to expose these functions to other modules
 module.exports ={
   // errorResp,
@@ -48,4 +58,5 @@ module.exports ={
   validateUserId,
   validateUser,
   validatePost,
+  checkNameExists,
 }

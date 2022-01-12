@@ -8,6 +8,7 @@ const {
   validatePost,
   validateUser,
   validateUserId,
+  checkNameExists
 } = require('../middleware/middleware')
 
 const router = express.Router();
@@ -32,9 +33,16 @@ router.get('/:id', validateUserId, (req, res, next) => {
   }
 });
 
-router.post('/', validateUser, (req, res, next) => {
+//todo: this actually is looking for unique names...
+router.post('/', validateUser, checkNameExists, async (req, res, next) => {
   // RETURN THE NEWLY CREATED USER OBJECT
   // this needs a middleware to check that the request body is valid
+  const newUser = await User.insert( req.body )
+  try {
+    return res.json( newUser )
+  } catch(err){
+    next(err)
+  }
 });
 
 router.put('/:id', validateUserId, validateUser, (req, res, next) => {
