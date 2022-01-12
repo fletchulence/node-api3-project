@@ -1,3 +1,7 @@
+function errorResp(req, res, next, err){
+  
+}
+
 function logger(req, res, next) {
   // DO YOUR MAGIC
   console.log('working')
@@ -18,6 +22,7 @@ function validatePost(req, res, next) {
 
 // do not forget to expose these functions to other modules
 module.exports ={
+  errorResp,
   logger,
   validateUserId,
   validateUser,
