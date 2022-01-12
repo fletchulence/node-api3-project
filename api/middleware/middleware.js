@@ -9,11 +9,11 @@ function logger(req, res, next) {
 async function validateUserId (req, res, next) {
   const { id } = req.params
   // DO YOUR MAGIC
-  const validId = await User.getById(id)
+  const validUser = await User.getById(id)
   try{
-    if ( validId ){
-      console.log(`validId`, validId)
-      req.user = validId
+    if ( validUser ){
+      console.log(`validUser`, validUser)
+      req.user = validUser
       next();
     } else{
       next({ status: 404, message: `user not found`})
@@ -41,7 +41,7 @@ function validatePost(req, res, next) {
   }
 }
 
-//! i added this one
+//! i added this one!
 async function checkNameExists(req, res, next){
   const existingName = await User.getName(req.body.name)
   if (existingName) {
