@@ -17,13 +17,14 @@ const {
 } = require('./middleware/middleware')
 
 server.get('/', 
-  logger, 
+  // logger, 
   // errorResp, 
 (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
 });
 
-server.use((err, req, res, next) => {
+
+server.use(logger, (err, req, res, next) => {
   console.log('disaster')
   res.status(err.status || 500).json({
     message: err.message,
