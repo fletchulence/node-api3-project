@@ -12,15 +12,23 @@ const usersRouter = require('./users/users-router');
 server.use('/api/users', usersRouter);
 
 const {
-  errorResp,
+  // errorResp,
   logger
 } = require('./middleware/middleware')
 
 server.get('/', 
   logger, 
-  errorResp, 
+  // errorResp, 
 (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
 });
+
+server.use((err, req, res, next) => {
+  console.log('disaster')
+  res.status(err.status || 500).json({
+    message: err.message,
+    // stack: err.stack
+  })
+})
 
 module.exports = server;
